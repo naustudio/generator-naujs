@@ -17,68 +17,66 @@ module.exports = yeoman.generators.Base.extend({
 
 		var prompts = [{
 			type: 'confirm',
-			name: 'jsHintBrowser',
+			name: 'jshint_browser',
 			message: 'Would you like to enable jsHint `browser` option?',
 			default: true
 		}, {
 			type: 'confirm',
-			name: 'jsHintEsnext',
+			name: 'jshint_esnext',
 			message: 'Would you like to enable jsHint `esnext` option?',
 			default: false
 		}, {
 			type: 'confirm',
-			name: 'jsHintNode',
+			name: 'jshint_node',
 			message: 'Would you like to enable jsHint `node` option?',
 			default: false
 		}];
 
 		this.prompt(prompts, function (props) {
-			this.props = props;
 			// To access props later use this.props.someOption;
+			this.props = props;
+
+			this.jshintOptions = getJshintOptions(props);
 
 			done();
 		}.bind(this));
+
+		function getJshintOptions(props) {
+			var jshintOptions = {};
+			for (var prop in props) {
+				if (prop.indexOf('jshint') >= 0) {
+					jshintOptions[prop.substring(7)] = props[prop];
+				}
+			}
+			return jshintOptions;
+		}
 	},
 
 	writing: {
 		app: function () {
-			this.fs.copyTpl(
-				this.templatePath('_package.json'),
-				this.destinationPath('package.json')
-			);
+			this.template('_package.json', 'package.json');
 		},
 
 		projectfiles: function () {
-			var projectName = this.projectName || 'project';
-			this.fs.copyTpl(
-				this.templatePath('_project.sublime-package'),
-				this.destinationPath(projectName + '.sublime-package')
-			);
+			var projectName = this.appname || 'project';
+			this.template('_project.sublime-project', projectName + '.sublime-project');
 
-			this.fs.copyTpl(
-				this.templatePath('editorconfig'),
-				this.destinationPath('.editorconfig')
-			);
-			this.fs.copyTpl(
-				this.templatePath('gitignore'),
-				this.destinationPath('.gitignore')
-			);
-			this.fs.copyTpl(
-				this.templatePath('jshintrc'),
-				this.destinationPath('.jshintrc')
-			);
-			this.fs.copyTpl(
-				this.templatePath('jscsrc'),
-				this.destinationPath('.jscsrc')
-			);
-			this.fs.copyTpl(
-				this.templatePath('scss-lint.yml'),
-				this.destinationPath('.scss-lint.yml')
-			);
+			this.template('editorconfig', '.editorconfig');
+			this.template('gitignore', '.gitignore');
+			this.template('jshintrc', '.jshintrc');
+			this.template('jscsrc', '.jscsrc');
+			this.template('scss-lint.yml', '.scss-lint.yml');
 		}
 	},
 
 	install: function () {
-		this.installDependencies();
+		this.installDependencies({
+			bower: false,
+			npm: true,
+			skipInstall: false,
+			callback: function () {
+				console.log('Everything is ready!');
+			}
+		});
 	}
 });
