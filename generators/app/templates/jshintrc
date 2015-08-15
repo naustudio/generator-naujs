@@ -1,19 +1,20 @@
 {
   "bitwise": true,
-  "browser": <%= jshintOptions.browser %>,
+  "browser": <%= jshintOptions.env.browser %>,
   "curly": true,
   "devel": true,
-  "dojo": true,
+  "dojo": <%= jshintOptions.env.dojo %>,
   "eqeqeq": true,
   "esnext": <%= jshintOptions.esnext %>,
-  "evil": true,
-  "jquery": true,
+  "es3": <%= jshintOptions.es3 %>,
+  "jquery": <%= jshintOptions.env.jquery %>,
   "noarg": true,
-  "node": <%= jshintOptions.node %>,
+  "node": <%= jshintOptions.env.node %>,
   "regexdash": true,
   "sub": true,
   "strict": true,
   "trailing": true,
   "undef": true,
-  "unused": true
+  "unused": true,
+  "globals": <%= jshintOptions.globals %>
 }

@@ -5,6 +5,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var _ = require('lodash');
 
 module.exports = yeoman.generators.Base.extend({
 	prompting: function () {
@@ -15,26 +16,83 @@ module.exports = yeoman.generators.Base.extend({
 			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
 		));
 
+		// all jshint environment options
+		var jshintEnv = {
+			'browser': 'Web Browser (window, document, etc)',
+			'dojo': 'Dojo Toolkit / RequireJS',
+			'jquery': 'jQuery',
+			'node': 'Node.js'
+		};
+
 		var prompts = [{
-			type: 'confirm',
-			name: 'jshint_browser',
-			message: 'Would you like to enable jsHint `browser` option?',
-			default: true
+			type    : 'input',
+			name    : 'name',
+			message : 'Your project name',
+			default : this.appname // Default to current folder name
 		}, {
 			type: 'confirm',
 			name: 'jshint_esnext',
-			message: 'Would you like to enable jsHint `esnext` option?',
+			message: 'Your JavaScript is written in ES6 (JSHint `esnext` option)?',
 			default: false
 		}, {
 			type: 'confirm',
-			name: 'jshint_node',
-			message: 'Would you like to enable jsHint `node` option?',
+			name: 'jshint_es3',
+			message: 'Your JavaScript runs in IE6/7/8 (JSHint `es3` option)?',
 			default: false
+		}, {
+			type: 'checkbox',
+			name: 'jshint_env',
+			message: 'These options let JSHint know about some pre-defined global variables:',
+			choices: [
+				{
+					name: jshintEnv['browser'],
+					checked: true
+				},
+				{
+					name: jshintEnv['dojo'],
+					checked: true
+				},
+				{
+					name: jshintEnv['jquery'],
+					checked: true
+				},
+				{
+					name: jshintEnv['node'],
+					checked: false
+				}
+			]
+		}, {
+			name: 'jshint_globals',
+			message: 'Additional predefined global variables (e.g. {"SomeGlobal": true})',
+			type: 'input',
+			default: '{}',
+			validate: function(input) {
+				// shamelessly copied from https://github.com/losingkeys/generator-jshint/blob/master/app/index.js
+				try {
+					var globals = JSON.parse(input);
+
+					for (var name in globals) {
+						if (globals.hasOwnProperty(name)) {
+							if (typeof globals[name] !== 'boolean') {
+								return 'Please enter a JSON object with only boolean ' +
+									'values to indicate which globals are or are not allowed';
+							}
+						}
+					}
+				} catch(e) {
+					return 'Please enter a valid JSON object';
+				}
+
+				return true;
+			}
 		}];
 
 		this.prompt(prompts, function (props) {
 			// To access props later use this.props.someOption;
 			this.props = props;
+			// Some global properties
+			this.name = props.name;
+			this.nameSlug = _.kebabCase(this.name);
 
 			this.jshintOptions = getJshintOptions(props);
 
@@ -44,10 +102,25 @@ module.exports = yeoman.generators.Base.extend({
 		function getJshintOptions(props) {
 			var jshintOptions = {};
 			for (var prop in props) {
-				if (prop.indexOf('jshint') >= 0) {
+				if (prop === 'jshint_env') {
+					var checkedEnv = props[prop];
+					/*jshint loopfunc:true*/
+					jshintOptions[prop.substring(7)] =
+						_.mapValues(jshintEnv, function(value) {
+							if (checkedEnv.indexOf(value) >= 0) {
+								return true;
+							} else {
+								return false;
+							}
+						});
+					/*jshint loopfunc:false*/
+
+					// console.log(jshintOptions[prop.substring(7)]);
+				} else if (prop.indexOf('jshint') >= 0) {
 					jshintOptions[prop.substring(7)] = props[prop];
 				}
 			}
+
 			return jshintOptions;
 		}
 	},
@@ -58,8 +131,8 @@ module.exports = yeoman.generators.Base.extend({
 		},
 
 		projectfiles: function () {
-			var projectName = this.appname || 'project';
-			this.template('_project.sublime-project', projectName + '.sublime-project');
+
+			this.template('_project.sublime-project', this.nameSlug + '.sublime-project');
 
 			this.template('editorconfig', '.editorconfig');
 			this.template('gitignore', '.gitignore');
