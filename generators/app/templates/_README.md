@@ -1,11 +1,11 @@
-Project Name
+<%= name %>
 ==============================
 
-__Code Name ""__
+<%= description %>
 
-- Mockup URL:
-- Git URL:
-- Issue tracker URL: 
+- Mockup URL: [TBD]
+- Git URL: [TBD]
+- Issue tracker URL: [TBD]
 
 
 GETTING STARTED WITH DEVELOPMENT
@@ -18,7 +18,7 @@ GETTING STARTED WITH DEVELOPMENT
     - [GulpJS][] commandline tool: `npm install --global gulp`
 2. Setting up IDE/Editor
     - Install development dependencies: In terminal, cd to __this__ folder: `npm install`
-    - Open the `*.sublime-project`
+    - Open the `<%= nameSlug %>.sublime-project`
 4. Testing app in web browser:
     - Execute `gulp` or `gulp serve`
 5. Optimize source code and prepare bundle for deployment: [TBD]
@@ -42,14 +42,15 @@ TECHNICAL SOLUTIONS
 DEVELOPMENT DEPENDENCIES
 ------------------------
 
+- [NodeJS][]
 
 FOLDER STRUCTURE
 ----------------
-[TBC]
+
     /                           : git root
     ├── assets                  : (directory for assets like editable PSDs, install templates, icons for icon fonts)
-    └── src                     : main source folder
-
+<% if(props.srcFolder) { %>    └── <%= props.srcFolder %>                     : main source folder
+<% } %>
 
 CONVENTIONS & BEST PRACTICES
 ----------------------------

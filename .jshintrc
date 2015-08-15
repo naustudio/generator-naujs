@@ -10,6 +10,7 @@
   "evil": true,
   "globalstrict": true,
   "jquery": true,
+  "mocha": true,
   "noarg": true,
   "node": true,
   "regexdash": true,
