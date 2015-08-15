@@ -144,13 +144,14 @@ module.exports = yeoman.generators.Base.extend({
 
 	writing: {
 		app: function () {
-			this.template('_package.json', 'package.json');
-			this.template('_README.md', 'README.md');
+			this.template('package.json', 'package.json');
+			this.template('README.md', 'README.md');
+			this.template('gulpfile.js', 'gulpfile.js');
 		},
 
 		projectfiles: function () {
 
-			this.template('_project.sublime-project', this.nameSlug + '.sublime-project');
+			this.template('project.sublime-project', this.nameSlug + '.sublime-project');
 
 			this.template('editorconfig', '.editorconfig');
 			this.template('gitignore', '.gitignore');
