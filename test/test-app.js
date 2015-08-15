@@ -12,7 +12,7 @@ describe('generator-naujs:app', function () {
 		helpers.run(path.join(__dirname, '../generators/app'))
 			.withOptions({ skipInstall: true })
 			.withPrompts({ name: 'Nau App' })
-			.withPrompts({ jshint_esnext: true })
+			.withPrompts({ jshint_esnext: false })
 			.withPrompts({ jshint_es3: false })
 			.withPrompts({ jshint_env: ['Node.js', 'Web Browser (window, document, etc)'] })
 			.on('end', done);
@@ -34,7 +34,7 @@ describe('generator-naujs:app', function () {
 	it('sets jshintrc rules', function () {
 		assert.fileContent('.jshintrc', /"browser":\s*true/);
 		assert.fileContent('.jshintrc', /"dojo":\s*false/);
-		assert.fileContent('.jshintrc', /"esnext":\s*true/);
+		assert.fileContent('.jshintrc', /"esnext":\s*false/);
 		assert.fileContent('.jshintrc', /"es3":\s*false/);
 		assert.fileContent('.jshintrc', /"jquery":\s*false/);
 		assert.fileContent('.jshintrc', /"node":\s*true/);
