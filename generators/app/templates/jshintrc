@@ -6,8 +6,8 @@
   "dojo": <%= jshintOptions.env.dojo %>,
   "eqeqeq": true,
   "esnext": <%= jshintOptions.esnext %>,
-  "es3": <%= jshintOptions.es3 %>,
-  "jquery": <%= jshintOptions.env.jquery %>,
+  <% if (jshintOptions.es3 != null) { %>"es3": <%= jshintOptions.es3 %>,<%
+  } %>"jquery": <%= jshintOptions.env.jquery %>,
   "noarg": true,
   "node": <%= jshintOptions.env.node %>,
   "regexdash": true,

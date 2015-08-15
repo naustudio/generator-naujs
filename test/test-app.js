@@ -22,6 +22,7 @@ describe('generator-naujs:app', function () {
 		assert.file([
 			'nau-app.sublime-project',
 			'package.json',
+			'README.md',
 			'.editorconfig',
 			'.gitignore',
 			'.jshintrc',

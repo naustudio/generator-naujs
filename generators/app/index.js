@@ -16,7 +16,7 @@ module.exports = yeoman.generators.Base.extend({
 			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
 		));
 
-		// all jshint environment options
+		// all jshint environment options mapping with prompting friendly text
 		var jshintEnv = {
 			'browser': 'Web Browser (window, document, etc)',
 			'dojo': 'Dojo Toolkit / RequireJS',
@@ -30,11 +30,27 @@ module.exports = yeoman.generators.Base.extend({
 			message : 'Your project name',
 			default : this.appname // Default to current folder name
 		}, {
+			type    : 'input',
+			name    : 'description',
+			message : 'Brief description of your project:',
+			default : ''
+		}, {
+			type    : 'input',
+			name    : 'srcFolder',
+			message : 'Your main source folder (leave empty for current)',
+			default : ''
+		},
+
+		// JSHINT
+		{
 			type: 'confirm',
 			name: 'jshint_esnext',
 			message: 'Your JavaScript is written in ES6 (JSHint `esnext` option)?',
 			default: false
 		}, {
+			when: function (response) {
+				return !response.jshint_esnext;
+			},
 			type: 'confirm',
 			name: 'jshint_es3',
 			message: 'Your JavaScript runs in IE6/7/8 (JSHint `es3` option)?',
@@ -42,7 +58,7 @@ module.exports = yeoman.generators.Base.extend({
 		}, {
 			type: 'checkbox',
 			name: 'jshint_env',
-			message: 'These options let JSHint know about some pre-defined global variables:',
+			message: 'Let JSHint know about some pre-defined global variables:',
 			choices: [
 				{
 					name: jshintEnv['browser'],
@@ -93,6 +109,7 @@ module.exports = yeoman.generators.Base.extend({
 			// Some global properties
 			this.name = props.name;
 			this.nameSlug = _.kebabCase(this.name);
+			this.description = props.description;
 
 			this.jshintOptions = getJshintOptions(props);
 
@@ -128,6 +145,7 @@ module.exports = yeoman.generators.Base.extend({
 	writing: {
 		app: function () {
 			this.template('_package.json', 'package.json');
+			this.template('_README.md', 'README.md');
 		},
 
 		projectfiles: function () {
