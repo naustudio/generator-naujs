@@ -1,12 +1,12 @@
 {
   "name": "generator-naujs",
-  "version": "0.0.0",
-  "description": "Yeoman generator",
+  "version": "0.1.0",
+  "description": "Nau Studio conventional Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
-  "repository": "naustudio/generator-naujs",
+  "repository": "https://github.com/naustudio/generator-naujs",
   "author": {
-    "name": "Thanh Tran",
+    "name": "Nau Studio",
     "email": "",
     "url": "https://github.com/naustudio"
   },

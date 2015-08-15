@@ -1,7 +1,7 @@
 # generator-naujs [![Build Status](https://secure.travis-ci.org/naustudio/generator-naujs.png?branch=master)](https://travis-ci.org/naustudio/generator-naujs)
 
-> [Yeoman](http://yeoman.io) generator
-
+> This is an opinionated [Yeoman](http://yeoman.io) generator made exclusively for [Nau Studio](https://github.com/naustudio)'s projects scaffolding and kickstart purposes.
+> Đây là một _bộ khởi tạo_ Yeoman được viết riêng cho Nâu Studio với mục đích khởi tạo nhanh các dự án theo quy trình của Nâu.
 
 ## Getting Started
 
@@ -9,7 +9,7 @@
 
 Trick question. It's not a thing. It's this guy:
 
-![](http://i.imgur.com/JHaAlBJ.png)
+![](https://raw.githubusercontent.com/yeoman/media/master/optimized/yeoman-masthead.png)
 
 Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
 
@@ -19,11 +19,11 @@ Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](
 npm install -g yo
 ```
 
-### Yeoman Generators
+### NauJS Generator
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-naujs from npm, run:
+To install `generator-naujs` from npm, run:
 
 ```bash
 npm install -g generator-naujs
@@ -44,4 +44,4 @@ If you'd like to get to know Yeoman better and meet some of his friends, [Grunt]
 
 ## License
 
-MIT
+[MIT](http://opensource.org/licenses/MIT). © Nâu Studio 
