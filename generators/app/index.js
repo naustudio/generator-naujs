@@ -146,7 +146,6 @@ module.exports = yeoman.generators.Base.extend({
 		app: function () {
 			this.template('package.json', 'package.json');
 			this.template('README.md', 'README.md');
-			this.template('gulpfile.js', 'gulpfile.js');
 		},
 
 		projectfiles: function () {
