@@ -92,6 +92,7 @@ describe('generator-naujs:app src at subfolder', function () {
 			.withPrompts({ jshint_esnext: false })
 			.withPrompts({ jshint_es3: true })
 			.withPrompts({ jshint_env: ['Node.js', 'Web Browser (window, document, etc)'] })
+			.withPrompts({ jshint_globals: 'moment, modernizr' })
 			.on('end', done);
 	});
 
@@ -117,7 +118,7 @@ describe('generator-naujs:app src at subfolder', function () {
 			['.jshintrc', /"es3":\s*true/],
 			['.jshintrc', /"jquery":\s*false/],
 			['.jshintrc', /"node":\s*true/],
-			['.jshintrc', /"globals":\s*{}/]
+			['.jshintrc', /"globals":\s*{"moment":false,"modernizr":false}/]
 		]);
 	});
 

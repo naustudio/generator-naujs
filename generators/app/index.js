@@ -37,7 +37,7 @@ module.exports = yeoman.generators.Base.extend({
 		}, {
 			type    : 'input',
 			name    : 'src',
-			message : 'Your main source folder (default is current folder)',
+			message : 'Your main source folder',
 			default : '.'
 		}, {
 			type    : 'input',
@@ -84,28 +84,9 @@ module.exports = yeoman.generators.Base.extend({
 			]
 		}, {
 			name: 'jshint_globals',
-			message: 'Additional predefined global variables (e.g. {"SomeGlobal": true})',
+			message: 'Additional predefined global variables (e.g: moment, modernizr...)',
 			type: 'input',
-			default: '{}',
-			validate: function(input) {
-				// shamelessly copied from https://github.com/losingkeys/generator-jshint/blob/master/app/index.js
-				try {
-					var globals = JSON.parse(input);
-
-					for (var name in globals) {
-						if (globals.hasOwnProperty(name)) {
-							if (typeof globals[name] !== 'boolean') {
-								return 'Please enter a JSON object with only boolean ' +
-									'values to indicate which globals are or are not allowed';
-							}
-						}
-					}
-				} catch(e) {
-					return 'Please enter a valid JSON object';
-				}
-
-				return true;
-			}
+			default: ''
 		}];
 
 		this.prompt(prompts, function (props) {
@@ -127,7 +108,7 @@ module.exports = yeoman.generators.Base.extend({
 				if (prop === 'jshint_env') {
 					var checkedEnv = props[prop];
 					/*jshint loopfunc:true*/
-					jshintOptions[prop.substring(7)] =
+					jshintOptions['env'] =
 						_.mapValues(jshintEnv, function(value) {
 							if (checkedEnv.indexOf(value) >= 0) {
 								return true;
@@ -138,6 +119,19 @@ module.exports = yeoman.generators.Base.extend({
 					/*jshint loopfunc:false*/
 
 					// console.log(jshintOptions[prop.substring(7)]);
+				} else if (prop === 'jshint_globals') {
+					var globals = String(props[prop]);
+					globals = globals.split(',');
+					var jshintGlobals = {};
+					for (var i = 0; i < globals.length; i++) {
+						var globalName = globals[i].trim();
+						if (globalName) {
+							jshintGlobals[globalName] = false; // globals are not mutable by default
+						}
+					}
+					jshintOptions['globals'] = JSON.stringify(jshintGlobals);
+					// console.log(jshintOptions['globals']);
+
 				} else if (prop.indexOf('jshint') >= 0) {
 					jshintOptions[prop.substring(7)] = props[prop];
 				}
