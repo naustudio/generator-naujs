@@ -36,9 +36,14 @@ module.exports = yeoman.generators.Base.extend({
 			default : ''
 		}, {
 			type    : 'input',
-			name    : 'srcFolder',
-			message : 'Your main source folder (leave empty for current)',
-			default : ''
+			name    : 'src',
+			message : 'Your main source folder (default is current folder)',
+			default : '.'
+		}, {
+			type    : 'input',
+			name    : 'dist',
+			message : 'Your build folder:',
+			default : 'dist'
 		},
 
 		// JSHINT
@@ -146,12 +151,20 @@ module.exports = yeoman.generators.Base.extend({
 		app: function () {
 			this.template('package.json', 'package.json');
 			this.template('README.md', 'README.md');
+			this.template('gulpfile.js', 'gulpfile.js');
+		},
+
+		h5bp: function() {
+			var src = this.props.src;
+			this.directory('src/css', src + '/css');
+			this.directory('src/img', src + '/img');
+			this.directory('src/js', src + '/js');
+
+			this.fs.copy(this.templatePath('src/*'), this.destinationPath(src + '/'));
 		},
 
 		projectfiles: function () {
-
 			this.template('project.sublime-project', this.nameSlug + '.sublime-project');
-
 			this.template('editorconfig', '.editorconfig');
 			this.template('gitignore', '.gitignore');
 			this.template('jshintrc', '.jshintrc');
@@ -161,13 +174,9 @@ module.exports = yeoman.generators.Base.extend({
 	},
 
 	install: function () {
-		this.installDependencies({
-			bower: false,
-			npm: true,
-			skipInstall: false,
-			callback: function () {
-				console.log('Everything is ready!');
-			}
-		});
+
+		this.npmInstall([
+
+		], {saveDev: true});
 	}
 });
