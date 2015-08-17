@@ -29,6 +29,10 @@
     "yosay": "^1.0.2"
   },
   "devDependencies": {
-    "mocha": "*"
-  }
+    "mocha": "*",
+    "pre-commit": "^1.1.1"
+  },
+  "pre-commit": [
+    "test"
+  ]
 }
