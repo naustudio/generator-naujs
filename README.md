@@ -1,6 +1,7 @@
 # generator-naujs [![Build Status](https://secure.travis-ci.org/naustudio/generator-naujs.png?branch=master)](https://travis-ci.org/naustudio/generator-naujs)
 
 > This is an opinionated [Yeoman](http://yeoman.io) generator made exclusively for [Nau Studio](https://github.com/naustudio)'s projects scaffolding and kickstart purposes.
+
 > Đây là một _bộ khởi tạo_ Yeoman được viết riêng cho Nâu Studio với mục đích khởi tạo nhanh các dự án theo quy trình của Nâu.
 
 ## Getting Started

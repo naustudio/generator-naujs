@@ -64,6 +64,7 @@ module.exports = yeoman.generators.Base.extend({
 			type: 'checkbox',
 			name: 'jshint_env',
 			message: 'Let JSHint know about some pre-defined global variables:',
+			default: [],
 			choices: [
 				{
 					name: jshintEnv['browser'],
@@ -87,6 +88,11 @@ module.exports = yeoman.generators.Base.extend({
 			message: 'Additional predefined global variables (e.g: moment, modernizr...)',
 			type: 'input',
 			default: ''
+		}, {
+			name: 'copyh5bp',
+			message: 'Generate HTML5 Boilerplate?',
+			type: 'confirm',
+			default: true
 		}];
 
 		this.prompt(prompts, function (props) {
@@ -149,12 +155,13 @@ module.exports = yeoman.generators.Base.extend({
 		},
 
 		h5bp: function() {
-			var src = this.props.src;
-			this.directory('src/css', src + '/css');
-			this.directory('src/img', src + '/img');
-			this.directory('src/js', src + '/js');
-
-			this.fs.copy(this.templatePath('src/*'), this.destinationPath(src + '/'));
+			if (this.props.copyh5bp) {
+				var src = this.props.src;
+				this.directory('src/css', src + '/css');
+				this.directory('src/img', src + '/img');
+				this.directory('src/js', src + '/js');
+				this.fs.copy(this.templatePath('src/*'), this.destinationPath(src + '/'));
+			}
 		},
 
 		projectfiles: function () {
