@@ -46,6 +46,8 @@ paths.distImages = paths.dist + '/' + paths.images;
 paths.distScripts = paths.dist + '/' + paths.scripts;
 paths.distStyles = paths.dist + '/' + paths.styles;
 
+/*generator: iconfont*/
+
 /**
  * Task: styles
  * compile sass, add browser prefix
