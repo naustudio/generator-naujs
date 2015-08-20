@@ -2,6 +2,10 @@
   "name": "<%= nameSlug %>",
   "version": "0.0.0",
   "description": "<%= description %>",
+  "config": {
+    "src": "<%= props.src %>",
+    "dist": "<%= props.dist %>"
+  },
   "dependencies": {},
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",

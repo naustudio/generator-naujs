@@ -45,16 +45,16 @@ describe('generator-naujs:app src at root', function () {
 
 	it('sets package.json dependencies', function () {
 		assert.fileContent([
-			['package.json', /autoprefixer-core/],
-			['package.json', /browser-sync/],
-			['package.json', /del/],
-			['package.json', /gulp/],
-			['package.json', /gulp-if/],
-			['package.json', /gulp-jshint/],
-			['package.json', /gulp-postcss/],
-			['package.json', /gulp-sass/],
-			['package.json', /gulp-sourcemaps/],
-			['package.json', /jshint-stylish/]
+			['package.json', 'autoprefixer-core'],
+			['package.json', 'browser-sync'],
+			['package.json', 'del'],
+			['package.json', 'gulp'],
+			['package.json', 'gulp-if'],
+			['package.json', 'gulp-jshint'],
+			['package.json', 'gulp-postcss'],
+			['package.json', 'gulp-sass'],
+			['package.json', 'gulp-sourcemaps'],
+			['package.json', 'jshint-stylish']
 		]);
 	});
 
@@ -124,16 +124,16 @@ describe('generator-naujs:app src at subfolder', function () {
 
 	it('sets package.json dependencies', function () {
 		assert.fileContent([
-			['package.json', /autoprefixer-core/],
-			['package.json', /browser-sync/],
-			['package.json', /del/],
-			['package.json', /gulp/],
-			['package.json', /gulp-if/],
-			['package.json', /gulp-jshint/],
-			['package.json', /gulp-postcss/],
-			['package.json', /gulp-sass/],
-			['package.json', /gulp-sourcemaps/],
-			['package.json', /jshint-stylish/]
+			['package.json', 'autoprefixer-core'],
+			['package.json', 'browser-sync'],
+			['package.json', 'del'],
+			['package.json', 'gulp'],
+			['package.json', 'gulp-if'],
+			['package.json', 'gulp-jshint'],
+			['package.json', 'gulp-postcss'],
+			['package.json', 'gulp-sass'],
+			['package.json', 'gulp-sourcemaps'],
+			['package.json', 'jshint-stylish']
 		]);
 	});
 
