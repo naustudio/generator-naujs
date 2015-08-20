@@ -6,11 +6,14 @@ var chalk = require('chalk');
 module.exports = yeoman.generators.Base.extend({
 	initializing: function () {
 		var done = this.async();
+
+		// check if the main generator already executed
 		var pkg = this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {
 			config: {
-				src: '',
-				dist: ''
-			}
+				src: 'src',
+				dist: 'dist',
+			},
+			devDependencies: {}
 		});
 
 		this.prompt([{
@@ -49,36 +52,47 @@ module.exports = yeoman.generators.Base.extend({
 		this.fs.writeJSON(this.destinationPath('package.json'), pkg);
 
 		// update gulpfile.js
-		this.fs.copy(
-			this.destinationPath('gulpfile.js'),
-			this.destinationPath('gulpfile.js'),
-			{
-				process: function(content) {
-					var re = /\/\*generator:\s*iconfont\*\//g;
-					content = content.toString();
+		var currentGulpfile;
+		try {
+			currentGulpfile = this.fs.read(this.destinationPath('gulpfile.js'));
+		} catch (err) {
+			this.log(chalk.yellow('gulpfile.js does not existed. Generate the iconfont task to a new gulpfile.js.'))
+			currentGulpfile = '/*generator: iconfont*/';
+		}
+		var re = /\/\*generator:\s*iconfont\*\//g;
+		var newGulpfile;
 
-					if (re.test(content)) {
-						var gulpIconfont = this.fs.read(this.templatePath('gulpfile-iconfont.js'));
-						gulpIconfont = this.engine(gulpIconfont, this);
-						return content.replace(re, gulpIconfont);
-					} else {
-						this.log(chalk.yellow('Cannot find pattern /*generator: iconfont*/ in gulpfile.js. iconfont task already generated'));
-						return content;
-					}
-				}.bind(this)
-			}
+		if (re.test(currentGulpfile)) {
+			var gulpIconfont = this.fs.read(this.templatePath('gulpfile-iconfont.js'));
+			gulpIconfont = this.engine(gulpIconfont, this);
+			newGulpfile = currentGulpfile.replace(re, gulpIconfont);
+		} else {
+			this.log(chalk.yellow('Cannot find pattern /*generator: iconfont*/ in gulpfile.js. iconfont task already generated'));
+			newGulpfile = currentGulpfile;
+		}
+
+		this.fs.write(
+			this.destinationPath('gulpfile.js'),
+			newGulpfile
 		);
 
 		// copy files in assets folder
 		this.fs.copy(
 			this.templatePath('assets/**/*'),
-			this.destinationPath('assets/'),
-			this
+			this.destinationPath('assets/')
 		);
 	},
 
 	install: function () {
 		// install the new iconfont package
 		this.npmInstall();
+	},
+
+	end: function() {
+		this.log(
+			chalk.green('Gulp iconfont task generated.'),
+			'\nPlease import ' + this.props.iconfontSCSSPath + '/_icons.scss ' +
+			'to your main SCSS file'
+		);
 	}
 });

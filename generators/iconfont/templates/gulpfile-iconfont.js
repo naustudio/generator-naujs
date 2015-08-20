@@ -20,9 +20,8 @@ gulp.task('iconfont', function(){
 					// this line is needed because gulp-iconfont has changed the api from 2.0
 					return { name: glyph.name, codepoint: glyph.unicode[0].charCodeAt(0) };
 				}),
-				fontName: fontName,
-				fontPath: '../fonts/',
 				className: 'icon',
+				fontName: fontName,
 				fontPath: '<%= props.iconfontPath %>'
 			};
 
