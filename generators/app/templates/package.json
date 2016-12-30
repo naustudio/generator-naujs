@@ -8,16 +8,16 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer-core": "",
-    "browser-sync": "",
-    "del": "",
-    "gulp": "",
-    "gulp-if": "",
-    "gulp-jshint": "",
-    "gulp-postcss": "",
-    "gulp-sass": "",
-    "gulp-sourcemaps": "",
-    "eslint": "",
-    "stylelint": ""
+    "autoprefixer-core": "*",
+    "browser-sync": "*",
+    "del": "*",
+    "gulp": "*",
+    "gulp-load-plugins": "*",
+    "gulp-if": "*",
+    "gulp-postcss": "*",
+    "gulp-sass": "*",
+    "gulp-sourcemaps": "*",
+    "eslint": "*",
+    "stylelint": "*"
   }
 }

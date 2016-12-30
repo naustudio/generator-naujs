@@ -12,7 +12,7 @@ module.exports = {
 		'comma-dangle'                : 0, // We allow trailing commas in list for benefit of version control diff
 		'comma-spacing'               :[2, { 'before': false, 'after': true} ],
 		'curly'                       :[2, 'all' ],
-		'dot-notation'                :[2, { 'allowKeywords': true } ],
+		'dot-notation'                : 0,
 		'eqeqeq'                      :[2, 'allow-null' ],
 		'indent'                      :[2, 'tab', {'SwitchCase': 1} ],
 		'linebreak-style'             :[2, 'unix' ],

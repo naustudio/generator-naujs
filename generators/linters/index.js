@@ -5,8 +5,7 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
-const _ = require('lodash');
-const eslintHelper = require('../linters/eslint');
+const eslintHelper = require('./eslint');
 
 const eslintEnvOptions = eslintHelper.env;
 
@@ -18,26 +17,6 @@ module.exports = Generator.extend({
 		));
 
 		let prompts = [{
-			type    : 'input',
-			name    : 'name',
-			message : 'Your project name',
-			default : this.appname // Default to current folder name
-		}, {
-			type    : 'input',
-			name    : 'description',
-			message : 'Brief description of your project:',
-			default : ''
-		}, {
-			type    : 'input',
-			name    : 'src',
-			message : 'Your main source folder',
-			default : '.'
-		}, {
-			type    : 'input',
-			name    : 'dist',
-			message : 'Your build folder:',
-			default : 'dist'
-		}, {
 			// eslint
 			type: 'checkbox',
 			name: 'eslint_env',
@@ -62,32 +41,21 @@ module.exports = Generator.extend({
 			message : 'Additional predefined global variables (e.g: moment, modernizr...)',
 			type    : 'input',
 			default : ''
-		}, {
-			name    : 'copyST3Project',
-			message : 'Generate *.sublime-project file?',
-			type    : 'confirm',
-			default : false,
-		}, {
-			name    : 'copyGulpfile',
-			message : 'Generate base Gulpfile?',
-			type    : 'confirm',
-			default : false,
-		}, {
-			name    : 'copyh5bp',
-			message : 'Generate HTML5 Boilerplate?',
-			type    : 'confirm',
-			default : false,
 		}
 		];
 
 		return this.prompt(prompts).then(props => {
 			// To access props later use this.props.someOption;
 			this.props = props;
-			// Some global properties
-			this.props.nameSlug = _.kebabCase(this.props.name);
 
 			this.props.eslintOptions = eslintHelper.getEslintOptions(props);
 		});
+
+	},
+
+	paths() {
+		this.sourceRoot(__dirname + '/../app/templates/');
+		// console.log('this.sourceRoot()', this.sourceRoot());
 	},
 
 	writing() {
@@ -103,32 +71,9 @@ module.exports = Generator.extend({
 			return this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), this.props);
 		};
 
-		copy('package.json', 'package.json');
-		copy('README.md', 'README.md');
-
-		if (this.props.copyGulpfile) {
-			copy('gulpfile.js', 'gulpfile.js');
-		}
-
-		if (this.props.copyh5bp) {
-			var src = this.props.src;
-			copy('src/css/*', src + '/css');
-			copy('src/img/.gitignore', src + '/img/');
-			copy('src/js/*', src + '/js');
-			copy('src/*', src + '/');
-		}
-
-		if (this.props.copyST3Project) {
-			copy('project.sublime-project', this.props.nameSlug + '.sublime-project');
-		}
-
 		copy('editorconfig', '.editorconfig');
 		copy('gitignore', '.gitignore');
 		copy('eslintrc.js', '.eslintrc.js');
 		copy('stylelintrc', '.stylelintrc');
-	},
-
-	install() {
-		this.npmInstall([], {saveDev: true});
 	}
 });

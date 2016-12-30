@@ -1,11 +1,18 @@
+/* © 2017 NauStud.io
+ * @author Thanh Tran
+ */
 'use strict';
-var yeoman = require('yeoman-generator');
-var path = require('path');
-var chalk = require('chalk');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const path = require('path');
 
-module.exports = yeoman.generators.Base.extend({
+module.exports = Generator.extend({
 	initializing: function () {
-		var done = this.async();
+		// Have Yeoman greet the user.
+		this.log(yosay(
+			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
+		));
 
 		// check if the main generator already executed
 		var pkg = this.pkg = this.fs.readJSON(this.destinationPath('package.json'), {
@@ -16,7 +23,7 @@ module.exports = yeoman.generators.Base.extend({
 			devDependencies: {}
 		});
 
-		this.prompt([{
+		let prompts = [{
 			type    : 'input',
 			name    : 'iconfontPath',
 			message : 'Font files folder from project root:',
@@ -25,18 +32,18 @@ module.exports = yeoman.generators.Base.extend({
 			type    : 'input',
 			name    : 'iconfontSamplePath',
 			message : 'Folder to output the icon sampling icons.html:',
-			default : 'assets/'
+			default : 'private/'
 		}, {
 			type    : 'input',
 			name    : 'iconfontSCSSPath',
 			message : 'Folder to output the style file _icons.scss:',
 			default : path.join(pkg.config.src, '/css')
-		}], function (props) {
+		}];
+
+		return this.prompt(prompts).then(props => {
 			// To access props later use this.props.someOption;
 			this.props = props;
-
-			done();
-		}.bind(this));
+		});
 
 	},
 
