@@ -4,7 +4,6 @@
 <%= description %>
 
 - Mockup URL: [TBD]
-- Git URL: [TBD]
 - Issue tracker URL: [TBD]
 
 
@@ -12,23 +11,26 @@ GETTING STARTED WITH DEVELOPMENT
 --------------------------------
 
 1. Software installation:
-    - Sublime Text 3 and [Nau Front End dotfiles](https://github.com/naustudio/dotfiles)
+    - Sublime Text 3 or Visual Studio Code
+    - [Nau dotfiles][]
     - Currently stable Google Chrome
     - [NodeJS][] (for testing, previewing, compiling and optimizing processes)
-    - [GulpJS][] commandline tool: `npm install --global gulp`
-2. Setting up IDE/Editor
-    - Install development dependencies: In terminal, cd to __this__ folder: `npm install`
-    - Open the `<%= nameSlug %>.sublime-project`
-4. Testing app in web browser:
-    - Execute `gulp` or `gulp serve`
-5. Optimize source code and prepare bundle for deployment: [TBD]
-6. Prepare upload bundle and upload to server: [TBD]
+    - Others:
+        + _Please list_
+2. Setting up development environment
+    - Install development dependencies: In terminal, cd to __this__ folder and run: `npm install`
+    - Open the __this__ folder in favorite editor
+3. Preview the app:
+    - Execute `npm start`
+4. Optimize source code and prepare bundle for deployment:
+    - Execute `npm run build`
+5. Prepare upload bundle and upload to server: [TBD]
 
 
 TECHNICAL SOLUTIONS
 -------------------
 
-[TBD]
+**[TBD]**
 
 - Minimum browser's supports:
     + Chrome ???
@@ -39,79 +41,71 @@ TECHNICAL SOLUTIONS
     + Safari ???
     + Blackberry ???
 
-DEVELOPMENT DEPENDENCIES
-------------------------
-
-- [NodeJS][]
-
 FOLDER STRUCTURE
 ----------------
 
     /                           : git root
-    ├── assets                  : (directory for assets like editable PSDs, install templates, icons for icon fonts)
-<% if(props.srcFolder) { %>    └── <%= props.srcFolder %>                     : main source folder
+    ├── private                 : (directory for dev assets like editable PSDs, install templates, icons for icon fonts)
+<% if(src) { %>    └── <%= src %>                     : main source folder
 <% } %>
 
 CONVENTIONS & BEST PRACTICES
 ----------------------------
 
-### JavaScript
-- Our convention is based on [Google JavaScript Style Guide][]
-- Alignment by TABs (not SPACES, tab width is up to user's preference, but 4-space tab is recommended)
-- Single quotes ('...') for String literal in js files
-- Variable Naming:
-    + Prefix property name with `_` (underscore) if it is intended as private and should not be used outside of the class
-    + Prototypes, classes (base objects that are used to spawn instances) are named with __PascalCase__ (Pin, PinBoard)
-    + Global objects, singleton and static objects are named with __PascalCase__ (DataModel, AppView, Templates)
-    + Object instances are named with __camelCase__ (pin, pinBoard)
-    + Prefix jQuery object variables with `$` sign so it is easier to differentiate jQuery objects with HTML element reference and other variable types. Example: `$view, $el, $scene`
-    + Declare variables at top of functions, group variables which are not initializeed with values into a one-liner `var` statement
-    ```JavaScript
-        var a, b, c;
-        var name = 'Default';
-        var age = 20;
-    ```
-- Functions:
-    + Prefix function name with 'on' if it is an ordinary event handling function
-    + Prefix function name with '_' if it is intended as private and should not be used outside of the class
-- Unless required, local variable for `this` reference: name it `self`. Besides, consider using Function.prototype.bind(this) whenever applicable to avoid the local variable for `this`.
-- Avoid using global jQuery `$(selector)` in View components, use local `$el.find(selector)` OR the shortcut `this.$(selector)` (where applicable) instead
-- jshint MUST BE USED to validate JavaScript syntax to maintain sanity & clarity of the code.
-    Refer to `.jshintrc` for detailed global rules
-- Comment and documentation:
-    + Comment every module/class
-    + Comment every public function
-    + Explicitly mark a function with `@override` if it is an override function
-    + Make use of [JSDoc][] syntax for auto-documentation generation later
+### General
 
-### SCSS
-- __Linter__: We're using `scss-lint` as linter for .scss files, rules are defined in `.scss-lint.yml`
-- __Comment__: every CSS component/file (at high level)
+- Files are named with **kebab-case**. (Reasons: to minimize case sensitivity issues on Linux).
+    - Exceptions: single class files should be named with PascalCase to link the file with the Class being declared inside.
+-
+
+### JavaScript
+
+- Use [Nau JavaScript Code Styles][], with below main points:
+    - Code indentation by **TABs**, and fine alignment by **SPACEs**. (Tab width is up to authors, but 4 is recommended.)
+    - Open brackets `{, (, [` on the same line.
+    - Single quotes ('...') for String literal in js, jsx files.
+    - Naming with **camcelCase** for variables, **CAPITALIZED_CASE** for enum constants, PascalCase for Class and Singleton.
+    - Use **spaces** frequently to enhance code readability.
+    - Comment code at Class level and public methods with [JSDoc][] and wherever logic is unclear.
+- [eslint][] MUST BE USED to validate JavaScript syntax to maintain sanity & clarity of the code.
+
+    Refer to `.eslintrc.js` for project-wise rules
+
+### CSS / SCSS
+- __Code styles__: follow [Nau Front End Code Guide][] and [BEM][] methodology
+    + BEM convention: `.block`, `.block--modifier`, `.block__element`
+    + Add prefixes to indicate:
+        - `js` - JS Hook: `.js-menu`, `.js-sidebar`
+        - `u` - utility class: `.u-hidden`, `.u-clearfix`
+- [stylelint][] MUST BE USED to validate code style and common mistakes
+- __Comments__: every CSS components, BEM Blocks, wherever intent is unclear
 - __OOCSS__:
-    + NO IDs in CSS
+    + NO **IDs** in CSS
     + Avoid attaching classes to elements (i.e. don’t do div.header or h1.title)
     + Except for utilitily classes, avoid using !important
     + Separate structure and skin: define repeating visual features (like background and border styles) as separate “skins” that you can mix-and-match
     + Separate container and content: rarely use location-dependent styles, an object should look the same no matter where you put it.
-- __SASS file naming__:
+- __SCSS file naming__:
     + Prefix underscore `_` to included .scss files, that are not compiled separately.
     + Don't add `_` or `.scss` in the `@import` statements
 - __Autoprefixer__: Don't add browser prefixes by yourself, let the gulp/grunt task autoprefixer do it for you.
 
 ###HTML
 
+- __Code styles__: follow [Nau Front End Code Guide][]
 
 ## KNOWLEDGE BASE
 
 [TBC]
 
-
+[BEM]: https://css-tricks.com/bem-101/
+[eslint]: http://eslint.org/
 [GulpJS]: http://gulpjs.com/
-[Google JavaScript Style Guide]: http://google.github.io/styleguide/javascriptguide.xml
 [Handlebars]: http://handlebarsjs.com/
-[jQuery]: http://jQuery.com
 [JSDoc]: http://usejsdoc.org/
-[libsass]: https://github.com/sass/libsass
+[Nau dotfiles]: https://github.com/naustudio/dotfiles
+[Nau Front End Code Guide]: http://code.naustud.io/code-guide
+[Nau JavaScript Code Styles]: http://code.naustud.io/javascript
 [NodeJS]: http://nodejs.org/
-[Normalize.css]: http://necolas.github.io/normalize.css/
 [SASS]: http://sass-lang.com/
+[stylelint]: http://stylelint.io

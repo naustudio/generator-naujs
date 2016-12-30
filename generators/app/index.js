@@ -1,30 +1,34 @@
-/* © 2015 NauStud.io
+/* © 2017 NauStud.io
  * @author Thanh Tran
  */
 'use strict';
-var yeoman = require('yeoman-generator');
-var chalk = require('chalk');
-var yosay = require('yosay');
-var _ = require('lodash');
+const Generator = require('yeoman-generator');
+const chalk = require('chalk');
+const yosay = require('yosay');
+const _ = require('lodash');
 
-module.exports = yeoman.generators.Base.extend({
-	prompting: function () {
-		var done = this.async();
-
+module.exports = Generator.extend({
+	prompting() {
 		// Have Yeoman greet the user.
 		this.log(yosay(
 			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
 		));
 
-		// all jshint environment options mapping with prompting friendly text
-		var jshintEnv = {
-			'browser': 'Web Browser (window, document, etc)',
-			'dojo': 'Dojo Toolkit / RequireJS',
-			'jquery': 'jQuery',
-			'node': 'Node.js'
+		// some eslint environment options mapping with prompting friendly text
+		let eslintEnvOptions = {
+			'browser': 'browser global variables.',
+			'node': 'Node.js global variables and Node.js scoping.',
+			'commonjs': 'CommonJS global variables and CommonJS scoping.',
+			'es6': 'enable all ECMAScript 6 features except for modules.',
+			'amd': 'defines require() and define() as global variables as per the amd spec.',
+			'mocha': 'adds all of the Mocha testing global variables.',
+			'jasmine': 'adds all of the Jasmine testing global variables for v.1.3 and 2.0.',
+			'jest': 'Jest global variables.',
+			'jquery': 'jQuery global variables.',
+			'meteor': 'Meteor global variables.',
 		};
 
-		var prompts = [{
+		let prompts = [{
 			type    : 'input',
 			name    : 'name',
 			message : 'Your project name',
@@ -44,140 +48,127 @@ module.exports = yeoman.generators.Base.extend({
 			name    : 'dist',
 			message : 'Your build folder:',
 			default : 'dist'
-		},
-
-		// JSHINT
-		{
-			type: 'confirm',
-			name: 'jshint_esnext',
-			message: 'Your JavaScript is written in ES6 (JSHint `esnext` option)?',
-			default: false
 		}, {
-			when: function (response) {
-				return !response.jshint_esnext;
-			},
-			type: 'confirm',
-			name: 'jshint_es3',
-			message: 'Your JavaScript runs in IE6/7/8 (JSHint `es3` option)?',
-			default: false
-		}, {
+			// eslint
 			type: 'checkbox',
-			name: 'jshint_env',
-			message: 'Let JSHint know about some pre-defined global variables:',
+			name: 'eslint_env',
+			message: 'Let ESLint know about some pre-defined global variables:',
 			default: [],
-			choices: [
-				{
-					name: jshintEnv['browser'],
-					checked: true
-				},
-				{
-					name: jshintEnv['dojo'],
-					checked: true
-				},
-				{
-					name: jshintEnv['jquery'],
-					checked: true
-				},
-				{
-					name: jshintEnv['node'],
-					checked: false
+			choices: Object.keys(eslintEnvOptions).map(key => {
+				let checked = false;
+				if (key === 'browser' || key === 'es6') {
+					checked = true;
 				}
-			]
-		}, {
-			name: 'jshint_globals',
-			message: 'Additional predefined global variables (e.g: moment, modernizr...)',
-			type: 'input',
-			default: ''
-		}, {
-			name: 'copyh5bp',
-			message: 'Generate HTML5 Boilerplate?',
-			type: 'confirm',
-			default: true
-		}];
 
-		this.prompt(prompts, function (props) {
+				return {
+					checked,
+					name: eslintEnvOptions[key],
+					value: key,
+					short: key,
+				};
+			})
+
+		}, {
+			name    : 'eslint_globals',
+			message : 'Additional predefined global variables (e.g: moment, modernizr...)',
+			type    : 'input',
+			default : ''
+		}, {
+			name    : 'copyST3Project',
+			message : 'Generate *.sublime-project file?',
+			type    : 'confirm',
+			default : false,
+		}, {
+			name    : 'copyGulpfile',
+			message : 'Generate base Gulpfile?',
+			type    : 'confirm',
+			default : false,
+		}, {
+			name    : 'copyh5bp',
+			message : 'Generate HTML5 Boilerplate?',
+			type    : 'confirm',
+			default : false,
+		}
+		];
+
+		return this.prompt(prompts).then(props => {
 			// To access props later use this.props.someOption;
 			this.props = props;
 			// Some global properties
-			this.name = props.name;
-			this.nameSlug = _.kebabCase(this.name);
-			this.description = props.description;
+			this.props.nameSlug = _.kebabCase(this.props.name);
 
-			this.jshintOptions = getJshintOptions(props);
+			this.props.eslintOptions = getEslintOptions(props);
+		});
 
-			done();
-		}.bind(this));
+		function getEslintOptions(props) {
+			let eslintOptions = {};
 
-		function getJshintOptions(props) {
-			var jshintOptions = {};
-			for (var prop in props) {
-				if (prop === 'jshint_env') {
-					var checkedEnv = props[prop];
-					/*jshint loopfunc:true*/
-					jshintOptions['env'] =
-						_.mapValues(jshintEnv, function(value) {
-							if (checkedEnv.indexOf(value) >= 0) {
-								return true;
-							} else {
-								return false;
-							}
-						});
-					/*jshint loopfunc:false*/
+			// eslint_env
+			let envArr = props.eslint_env; // list of selected env
+			console.log('envArr', envArr);
+			let eslintEnv = '';
+			envArr.map(env => {
+				eslintEnv += env + ': true,\n';
+			});
+			eslintOptions.env = eslintEnv;
+			console.log('eslintOptions.env', eslintOptions.env);
 
-					// console.log(jshintOptions[prop.substring(7)]);
-				} else if (prop === 'jshint_globals') {
-					var globals = String(props[prop]);
-					globals = globals.split(',');
-					var jshintGlobals = {};
-					for (var i = 0; i < globals.length; i++) {
-						var globalName = globals[i].trim();
-						if (globalName) {
-							jshintGlobals[globalName] = false; // globals are not mutable by default
-						}
-					}
-					jshintOptions['globals'] = JSON.stringify(jshintGlobals);
-					// console.log(jshintOptions['globals']);
+			// eslint_globals
+			let globals = props.eslint_globals;
+			let eslintGlobals = {};
 
-				} else if (prop.indexOf('jshint') >= 0) {
-					jshintOptions[prop.substring(7)] = props[prop];
+			 globals.split(',').forEach(globalName => {
+				globalName = globalName.trim();
+				if (globalName) {
+					eslintGlobals[globalName] = false; // globals are not mutable by default
 				}
-			}
+			});
 
-			return jshintOptions;
+			eslintOptions.globals = JSON.stringify(eslintGlobals).replace(/"/g, '\'');
+			console.log(eslintOptions.globals);
+
+			return eslintOptions;
 		}
 	},
 
-	writing: {
-		app: function () {
-			this.template('package.json', 'package.json');
-			this.template('README.md', 'README.md');
-			this.template('gulpfile.js', 'gulpfile.js');
-		},
+	writing() {
+		/**
+		 * Helper method to copyTpl without all the templatePath and destinationPath boilerplate
+		 *
+		 * @param {any} from from glob, default to ./template/
+		 * @param {any} to to glob
+		 * @return {any} any
+		 */
+		const copy = (from, to) => {
+			console.log('copy', from, to);
+			return this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), this.props);
+		};
 
-		h5bp: function() {
-			if (this.props.copyh5bp) {
-				var src = this.props.src;
-				this.directory('src/css', src + '/css');
-				this.directory('src/img', src + '/img');
-				this.directory('src/js', src + '/js');
-				this.fs.copy(this.templatePath('src/*'), this.destinationPath(src + '/'));
-			}
-		},
+		copy('package.json', 'package.json');
+		copy('README.md', 'README.md');
 
-		projectfiles: function () {
-			this.template('project.sublime-project', this.nameSlug + '.sublime-project');
-			this.template('editorconfig', '.editorconfig');
-			this.template('gitignore', '.gitignore');
-			this.template('jshintrc', '.jshintrc');
-			this.template('jscsrc', '.jscsrc');
-			this.template('scss-lint.yml', '.scss-lint.yml');
+		if (this.props.copyGulpfile) {
+			copy('gulpfile.js', 'gulpfile.js');
 		}
+
+		if (this.props.copyh5bp) {
+			var src = this.props.src;
+			copy('src/css/*', src + '/css');
+			copy('src/img/.gitignore', src + '/img/');
+			copy('src/js/*', src + '/js');
+			copy('src/*', src + '/');
+		}
+
+		if (this.props.copyST3Project) {
+			copy('project.sublime-project', this.props.nameSlug + '.sublime-project');
+		}
+		copy('editorconfig', '.editorconfig');
+		copy('gitignore', '.gitignore');
+		copy('eslintrc.js', '.eslintrc.js');
+		copy('stylelintrc', '.stylelintrc');
 	},
 
-	install: function () {
-
-		this.npmInstall([
-
-		], {saveDev: true});
+	install() {
+		this.npmInstall([], {saveDev: true});
 	}
 });

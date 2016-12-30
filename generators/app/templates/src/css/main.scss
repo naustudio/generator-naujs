@@ -1,7 +1,4 @@
 @import 'normalize';
-//@import 'icons';
-/*! HTML5 Boilerplate v5.2.0 | MIT License | https://html5boilerplate.com/ */
-
 /*
  * What follows is the result of much research on cross-browser styling.
  * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
@@ -25,11 +22,6 @@ html {
  * These selection rule sets have to be separate.
  * Customize the background color to match your design.
  */
-
-::-moz-selection {
-	background: #b3d4fc;
-	text-shadow: none;
-}
 
 ::selection {
 	background: #b3d4fc;
@@ -118,19 +110,23 @@ textarea {
    ========================================================================== */
 
 /*
- * Hide visually and from screen readers:
+ * Hide visually and from screen readers
  */
 
-.hidden {
+.u-hidden {
 	display: none !important;
 }
 
 /*
  * Hide only visually, but have it available for screen readers:
- * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ * https://snook.ca/archives/html_and_css/hiding-content-for-accessibility
+ *
+ * 1. For long content, line feeds are not interpreted as spaces and small width
+ *    causes content to wrap 1 word per line:
+ *    https://medium.com/@jessebeach/beware-smushed-off-screen-accessible-text-5952a4c2cbfe
  */
 
-.visuallyhidden {
+.u-visuallyhidden {
 	border: 0;
 	clip: rect(0 0 0 0);
 	height: 1px;
@@ -139,29 +135,31 @@ textarea {
 	padding: 0;
 	position: absolute;
 	width: 1px;
+	white-space: nowrap; /* 1 */
 }
 
 /*
- * Extends the .visuallyhidden class to allow the element
+ * Extends the .u-visuallyhidden class to allow the element
  * to be focusable when navigated to via the keyboard:
  * https://www.drupal.org/node/897638
  */
 
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
+.u-visuallyhidden.focusable:active,
+.u-visuallyhidden.focusable:focus {
 	clip: auto;
 	height: auto;
 	margin: 0;
 	overflow: visible;
 	position: static;
 	width: auto;
+	white-space: inherit;
 }
 
 /*
  * Hide visually and from screen readers, but maintain layout
  */
 
-.invisible {
+.u-invisible {
 	visibility: hidden;
 }
 
@@ -177,13 +175,13 @@ textarea {
  *    `:before` to contain the top-margins of child elements.
  */
 
-.clearfix:before,
-.clearfix:after {
+.u-clearfix:before,
+.u-clearfix:after {
 	content: " "; /* 1 */
 	display: table; /* 2 */
 }
 
-.clearfix:after {
+.u-clearfix:after {
 	clear: both;
 }
 
@@ -198,7 +196,6 @@ textarea {
 }
 
 @media print,
-	   (-webkit-min-device-pixel-ratio: 1.25),
 	   (min-resolution: 1.25dppx),
 	   (min-resolution: 120dpi) {
 	/* Style adjustments for high resolution devices */
@@ -214,8 +211,14 @@ textarea {
 	*,
 	*:before,
 	*:after,
-	*:first-letter,
-	*:first-line {
+	p:first-letter,
+	div:first-letter,
+	blockquote:first-letter,
+	li:first-letter,
+	p:first-line,
+	div:first-line,
+	blockquote:first-line,
+	li:first-line {
 		background: transparent !important;
 		color: #000 !important; /* Black prints faster:
 								   http://www.sanbeiji.com/archives/953 */
@@ -246,6 +249,9 @@ textarea {
 		content: "";
 	}
 
+	pre {
+		white-space: pre-wrap !important;
+	}
 	pre,
 	blockquote {
 		border: 1px solid #999;
@@ -264,10 +270,6 @@ textarea {
 	tr,
 	img {
 		page-break-inside: avoid;
-	}
-
-	img {
-		max-width: 100% !important;
 	}
 
 	p,

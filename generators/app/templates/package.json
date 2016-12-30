@@ -3,20 +3,21 @@
   "version": "0.0.0",
   "description": "<%= description %>",
   "config": {
-    "src": "<%= props.src %>",
-    "dist": "<%= props.dist %>"
+    "src": "<%= src %>",
+    "dist": "<%= dist %>"
   },
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer-core": "^5.2.1",
-    "browser-sync": "^2.8.2",
-    "del": "^1.2.1",
-    "gulp": "^3.9.0",
-    "gulp-if": "^1.2.5",
-    "gulp-jshint": "^1.11.2",
-    "gulp-postcss": "^5.1.10",
-    "gulp-sass": "^2.0.4",
-    "gulp-sourcemaps": "^1.5.2",
-    "jshint-stylish": "^2.0.1"
+    "autoprefixer-core": "",
+    "browser-sync": "",
+    "del": "",
+    "gulp": "",
+    "gulp-if": "",
+    "gulp-jshint": "",
+    "gulp-postcss": "",
+    "gulp-sass": "",
+    "gulp-sourcemaps": "",
+    "eslint": "",
+    "stylelint": ""
   }
 }
