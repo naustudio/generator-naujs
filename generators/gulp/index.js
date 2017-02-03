@@ -5,13 +5,14 @@
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
-const _ = require('lodash');
 
 module.exports = Generator.extend({
 	prompting() {
 		// Have Yeoman greet the user.
 		this.log(yosay(
-			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
+			`Welcome to the ${chalk.red('Naujs:gulp')} subgenerator!\n
+${chalk.yellow('Note:')} This subgenerator must be executed in project root
+			`
 		));
 
 		// check if the main generator already executed
@@ -19,37 +20,39 @@ module.exports = Generator.extend({
 			config: {
 				src: '.',
 				dist: 'dist',
-			},
-			devDependencies: {}
+			}
 		});
 
 		let prompts = [{
 			type    : 'input',
-			name    : 'projectSrc',
-			message : 'Your project folder (as root for other path config)',
-			default : '.',
-		}, {
-			type    : 'input',
 			name    : 'src',
 			message : 'Your main source folder (relative to project source):',
-			default : '.',
+			default : pkg.config.src,
 		}, {
 			type    : 'input',
 			name    : 'dist',
 			message : 'Your build folder (relative to project source):',
-			default : 'dist',
+			default : pkg.config.dist,
+		}, {
+			type: 'input',
+			name: 'assets',
+			message: 'Your dev assets folder (relative to project source):',
+			default: pkg.config.assets,
 		},
 		];
 
 		return this.prompt(prompts).then(props => {
 			// To access props later use this.props.someOption;
 			this.props = props;
+			// Update pkg config from the prompt:
+			this.pkg.config.src = props.src;
+			this.pkg.config.dist = props.dist;
+			this.pkg.config.assets = props.assets;
 		});
 	},
 
 	paths() {
 		this.sourceRoot(__dirname + '/../app/templates/');
-		this.destinationRoot(this.props.projectSrc);
 	},
 
 	writing() {
@@ -65,6 +68,21 @@ module.exports = Generator.extend({
 			return this.fs.copyTpl(this.templatePath(from), this.destinationPath(to), this.props);
 		};
 
+		this.fs.writeJSON(this.destinationPath('package.json'), this.pkg);
+
 		copy('gulpfile.js', 'gulpfile.js');
+	},
+
+	install() {
+		this.yarnInstall([
+			'browser-sync',
+			'del',
+			'gulp',
+			'gulp-load-plugins',
+			'gulp-if',
+			'gulp-postcss',
+			'gulp-sass',
+			'gulp-sourcemaps',
+		], { dev: true });
 	}
 });

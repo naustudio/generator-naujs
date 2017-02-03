@@ -6,7 +6,7 @@ const Generator = require('yeoman-generator');
 const chalk = require('chalk');
 const yosay = require('yosay');
 const _ = require('lodash');
-const eslintHelper = require('../linters/eslint');
+const eslintHelper = require('../dotfiles/eslint');
 
 const eslintEnvOptions = eslintHelper.env;
 
@@ -14,7 +14,7 @@ module.exports = Generator.extend({
 	prompting() {
 		// Have Yeoman greet the user.
 		this.log(yosay(
-			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
+			'Welcome to the ' + chalk.red('Naujs') + ' generator!'
 		));
 
 		let prompts = [{
@@ -38,12 +38,17 @@ module.exports = Generator.extend({
 			message : 'Your build folder:',
 			default : 'dist'
 		}, {
+			type    : 'input',
+			name    : 'assets',
+			message : 'Your dev assets folder:',
+			default : 'private'
+		}, {
 			// eslint
-			type: 'checkbox',
-			name: 'eslint_env',
-			message: 'Let ESLint know about some pre-defined global variables:',
-			default: [],
-			choices: Object.keys(eslintEnvOptions).map(key => {
+			name    : 'eslint_env',
+			type    : 'checkbox',
+			message : 'Let ESLint know about some pre-defined global variables:',
+			default : [],
+			choices : Object.keys(eslintEnvOptions).map(key => {
 				let checked = false;
 				if (key === 'browser' || key === 'es6') {
 					checked = true;
@@ -69,7 +74,7 @@ module.exports = Generator.extend({
 			default : false,
 		}, {
 			name    : 'copyGulpfile',
-			message : 'Generate base Gulpfile?',
+			message : 'Generate Gulpfile.js?',
 			type    : 'confirm',
 			default : false,
 		}, {
@@ -124,11 +129,29 @@ module.exports = Generator.extend({
 
 		copy('editorconfig', '.editorconfig');
 		copy('gitignore', '.gitignore');
+		copy('eslintignore', '.eslintignore');
 		copy('eslintrc.js', '.eslintrc.js');
 		copy('stylelintrc', '.stylelintrc');
 	},
 
 	install() {
-		this.npmInstall([], {saveDev: true});
+		this.yarnInstall([
+			'autoprefixer',
+			'eslint',
+			'stylelint',
+		], {dev: true});
+
+		if (this.props.copyGulpfile) {
+			this.yarnInstall([
+				'browser-sync',
+				'del',
+				'gulp',
+				'gulp-load-plugins',
+				'gulp-if',
+				'gulp-postcss',
+				'gulp-sass',
+				'gulp-sourcemaps',
+			], {dev: true});
+		}
 	}
 });

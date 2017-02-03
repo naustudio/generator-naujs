@@ -4,20 +4,9 @@
   "description": "<%= description %>",
   "config": {
     "src": "<%= src %>",
-    "dist": "<%= dist %>"
+    "dist": "<%= dist %>",
+		"assets": "<%= assets %>"
   },
   "dependencies": {},
-  "devDependencies": {
-    "autoprefixer-core": "*",
-    "browser-sync": "*",
-    "del": "*",
-    "gulp": "*",
-    "gulp-load-plugins": "*",
-    "gulp-if": "*",
-    "gulp-postcss": "*",
-    "gulp-sass": "*",
-    "gulp-sourcemaps": "*",
-    "eslint": "*",
-    "stylelint": "*"
-  }
+  "devDependencies": {}
 }

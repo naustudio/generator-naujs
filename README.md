@@ -36,6 +36,17 @@ Finally, initiate the generator:
 yo naujs
 ```
 
+Sub-generators:
+
+```bash
+# generate gulpfile and install its dependencies
+yo naujs:gulp
+
+# add iconfont task and install its dependencies
+yo naujs:gulp-iconfont
+```
+
+
 ### Getting To Know Yeoman
 
 Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
@@ -45,4 +56,4 @@ If you'd like to get to know Yeoman better and meet some of his friends, [Grunt]
 
 ## License
 
-[MIT](http://opensource.org/licenses/MIT). © Nâu Studio 
+[MIT](http://opensource.org/licenses/MIT). © 2017 Nâu Studio

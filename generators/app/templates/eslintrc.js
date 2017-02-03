@@ -45,9 +45,9 @@ module.exports = {
 		// 'react/jsx-no-bind'           : 2,
 		// 'react/prop-types'            : 0,
 	},
-	'globals': <%= eslintOptions.globals %>,
+	'globals': <%- eslintOptions.globals %>,
 	'env': {
-		<%= eslintOptions.env %>
+<%= eslintOptions.env %>
 	},
 	// 'parser': 'babel-eslint',
 	'parserOptions': {

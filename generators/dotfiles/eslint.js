@@ -7,7 +7,7 @@ module.exports = {
 	 * Return params to pass to the eslintrc.js template
 	 *
 	 * @param {Object} props yeoman prompt result
-	 * @returns {Object} template comsumable data
+	 * @returns {Object} template consumable data
 	 */
 	getEslintOptions(props) {
 		let eslintOptions = {};
@@ -15,10 +15,9 @@ module.exports = {
 		// eslint_env
 		let envArr = props.eslint_env; // list of selected env
 		console.log('envArr', envArr);
-		let eslintEnv = '';
-		envArr.map(env => {
-			eslintEnv += env + ': true,\n';
-		});
+		let eslintEnv = envArr.map(env => {
+			return `\t\t${env}: true,`;
+		}).join('\n');
 		eslintOptions.env = eslintEnv;
 		console.log('eslintOptions.env', eslintOptions.env);
 
@@ -33,7 +32,9 @@ module.exports = {
 			}
 		});
 
-		eslintOptions.globals = JSON.stringify(eslintGlobals).replace(/"/g, '\'');
+		eslintOptions.globals = JSON.stringify(eslintGlobals)
+									.replace(/"/g, '\'')       // replace double quote to single quote
+									.replace(/(:|,)/g, '$1 '); // add 1 space after : and ,
 		console.log(eslintOptions.globals);
 
 		return eslintOptions;

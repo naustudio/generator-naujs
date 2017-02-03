@@ -2,11 +2,8 @@
  * Task: iconfont
  * Generate icon font from assets/icons SVG folder
  */
-g.iconfont = require('gulp-iconfont');
-g.consolidate = require('gulp-consolidate');
-
-gulp.task('iconfont', function(){
-	var fontName = 'icons';
+gulp.task('iconfont', function() {
+	var fontName = '<%= iconfontName %>';
 
 	gulp.src([path.join(paths.assets, '/icons/*.svg')])
 		.pipe(g.iconfont({
@@ -22,20 +19,20 @@ gulp.task('iconfont', function(){
 				}),
 				className: 'icon',
 				fontName: fontName,
-				fontPath: '<%= props.iconfontPath %>'
+				fontPath: '<%= iconfontPath %>'
 			};
 
 			// generate _icons.scss
-			gulp.src('assets/iconfont-templates/_icons.scss')
+			gulp.src('<%= assets %>/iconfont-templates/_icons.scss')
 				.pipe(g.consolidate('lodash', opts ))
-				.pipe(gulp.dest('<%= props.iconfontSCSSPath %>')); // change icons.scss output folder here
+				.pipe(gulp.dest('<%= iconfontSCSSPath %>')); // change icons.scss output folder here
 
 			// // generate icons.html for previewing
-			gulp.src('assets/iconfont-templates/icons.html')
+			gulp.src('<%= assets %>/iconfont-templates/icons.html')
 				.pipe(g.consolidate('lodash', opts))
-				.pipe(gulp.dest('<%= props.iconfontSamplePath %>')); // set path to export your sample HTML
+				.pipe(gulp.dest('<%= assets %>')); // set path to export your sample HTML
 		})
-		.pipe(gulp.dest('<%= props.iconfontPath %>')); // set path to generate the font file to
+		.pipe(gulp.dest('<%= iconfontPath %>')); // set path to generate the font file to
 });
 
 // ----------------------------------------------------------------------------

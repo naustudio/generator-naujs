@@ -16,7 +16,7 @@ let mode = 'dev';
 let paths = {
 	src: '<%= src %>',
 	dist: '<%= dist %>',
-	assets: 'assets',
+	assets: '<%= assets %>',
 	// subfolders:
 	fonts: 'fonts',
 	images: 'img',
@@ -24,18 +24,17 @@ let paths = {
 	scripts: 'js',
 	styles: 'css',
 	// temporary
-	tmp: '.tmp'
+	tmp: '.tmp',
+	// other computed paths
+	get srcFonts() { return paths.src + '/' + paths.fonts; },
+	get srcImages() { return paths.src + '/' + paths.images; },
+	get srcScripts() { return paths.src + '/' + paths.scripts; },
+	get srcStyles() { return paths.src + '/' + paths.styles; },
+	get distFonts() { return paths.dist + '/' + paths.fonts; },
+	get distImages() { return paths.dist + '/' + paths.images; },
+	get distScripts() { return paths.dist + '/' + paths.scripts; },
+	get distStyles() { return paths.dist + '/' + paths.styles; },
 };
-
-// other path shorthands
-paths.srcFonts = paths.src + '/' + paths.fonts;
-paths.srcImages = paths.src + '/' + paths.images;
-paths.srcScripts = paths.src + '/' + paths.scripts;
-paths.srcStyles = paths.src + '/' + paths.styles;
-paths.distFonts = paths.dist + '/' + paths.fonts;
-paths.distImages = paths.dist + '/' + paths.images;
-paths.distScripts = paths.dist + '/' + paths.scripts;
-paths.distStyles = paths.dist + '/' + paths.styles;
 
 /*generator: iconfont*/
 

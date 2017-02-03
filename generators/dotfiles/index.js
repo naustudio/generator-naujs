@@ -13,16 +13,17 @@ module.exports = Generator.extend({
 	prompting() {
 		// Have Yeoman greet the user.
 		this.log(yosay(
-			'Welcome to the  ' + chalk.red('Naujs') + ' generator!'
+			`Welcome to ${chalk.red('Naujs:dotfiles')} subgenerator!\n
+This generator will generate default dotfiles for projects`
 		));
 
 		let prompts = [{
 			// eslint
-			type: 'checkbox',
-			name: 'eslint_env',
-			message: 'Let ESLint know about some pre-defined global variables:',
-			default: [],
-			choices: Object.keys(eslintEnvOptions).map(key => {
+			name    : 'eslint_env',
+			type    : 'checkbox',
+			message : 'Let ESLint know about some pre-defined global variables:',
+			default : [],
+			choices : Object.keys(eslintEnvOptions).map(key => {
 				let checked = false;
 				if (key === 'browser' || key === 'es6') {
 					checked = true;
@@ -41,7 +42,7 @@ module.exports = Generator.extend({
 			message : 'Additional predefined global variables (e.g: moment, modernizr...)',
 			type    : 'input',
 			default : ''
-		}
+		},
 		];
 
 		return this.prompt(prompts).then(props => {
@@ -73,6 +74,7 @@ module.exports = Generator.extend({
 
 		copy('editorconfig', '.editorconfig');
 		copy('gitignore', '.gitignore');
+		copy('eslintignore', '.eslintignore');
 		copy('eslintrc.js', '.eslintrc.js');
 		copy('stylelintrc', '.stylelintrc');
 	}

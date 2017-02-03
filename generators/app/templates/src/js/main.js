@@ -1,4 +1,4 @@
-/* © 2015 NauStud.io
+/* © 2017 NauStud.io
  * @author ...
  */
 $(function() {
