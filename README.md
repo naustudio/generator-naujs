@@ -1,4 +1,6 @@
-# generator-naujs [![Build Status](https://secure.travis-ci.org/naustudio/generator-naujs.png?branch=master)](https://travis-ci.org/naustudio/generator-naujs)
+# generator-naujs
+
+<!-- [![Build Status](https://secure.travis-ci.org/naustudio/generator-naujs.png?branch=master)](https://travis-ci.org/naustudio/generator-naujs) -->
 
 > This is an opinionated [Yeoman](http://yeoman.io) generator made exclusively for [Nau Studio](https://github.com/naustudio)'s projects scaffolding and kickstart purposes.
 
@@ -20,9 +22,7 @@ Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](
 npm install -g yo
 ```
 
-### NauJS Generator
-
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
+### NauJS Generator Usage
 
 To install `generator-naujs` from npm, run:
 
@@ -42,8 +42,11 @@ Sub-generators:
 # generate gulpfile and install its dependencies
 yo naujs:gulp
 
-# add iconfont task and install its dependencies
+# add gulp iconfont task and install its dependencies
 yo naujs:gulp-iconfont
+
+# add dotfiles config for projects
+yo naujs:dotfiles
 ```
 
 

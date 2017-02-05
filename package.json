@@ -27,6 +27,7 @@
     "ejs": "^2.5.5",
     "lodash": "^4.17.3",
     "yeoman-generator": "^1.0.1",
+    "yeoman-test": "^1.6.0",
     "yosay": "^1.2.1"
   },
   "devDependencies": {
