@@ -120,7 +120,10 @@ module.exports = Generator.extend({
 			copy('src/css/*', src + '/css');
 			copy('src/img/.gitignore', src + '/img/');
 			copy('src/js/*', src + '/js');
-			copy('src/*', src + '/');
+			copy('src/index.html', src + '/index.html');
+			// copy files without template processing
+			this.fs.copy(this.templatePath('src/apple-touch-icon.png'), this.destinationPath(src + '/apple-touch-icon.png'));
+			this.fs.copy(this.templatePath('src/favicon.ico'), this.destinationPath(src + '/favicon.ico'));
 		}
 
 		if (this.props.copyST3Project) {
