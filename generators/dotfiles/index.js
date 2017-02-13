@@ -77,5 +77,13 @@ This generator will generate default dotfiles for projects`
 		copy('eslintignore', '.eslintignore');
 		copy('eslintrc.js', '.eslintrc.js');
 		copy('stylelintrc', '.stylelintrc');
+	},
+
+	install() {
+		this.yarnInstall([
+			'eslint',
+			'stylelint',
+			'stylelint-config-standard',
+		], { dev: true });
 	}
 });

@@ -139,9 +139,9 @@ module.exports = Generator.extend({
 
 	install() {
 		this.yarnInstall([
-			'autoprefixer',
 			'eslint',
 			'stylelint',
+			'stylelint-config-standard',
 		], {dev: true});
 
 		if (this.props.copyGulpfile) {
