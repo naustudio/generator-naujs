@@ -1,13 +1,20 @@
 {
-  "name": "<%= nameSlug %>",
-  "version": "0.0.0",
-  "description": "<%= description %>",
-  "license": "UNLICENSED",
-  "config": {
-    "src": "<%= src %>",
-    "dist": "<%= dist %>",
-    "assets": "<%= assets %>"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+	"name": "<%= nameSlug %>",
+	"version": "0.0.0",
+	"description": "<%= description %>",
+	"license": "UNLICENSED",
+	"config": {
+		"src": "<%= src %>",
+		"dist": "<%= dist %>",
+		"assets": "<%= assets %>"
+	},
+	"scripts": {
+		"start": "webpack-dev-server"
+	},
+	"browserslist": [
+		"last 2 version",
+		"ie >= 10"
+	],
+	"dependencies": {},
+	"devDependencies": {}
 }

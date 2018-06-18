@@ -11,7 +11,7 @@ GETTING STARTED WITH DEVELOPMENT
 --------------------------------
 
 1. Software installation:
-    - Sublime Text 3 or Visual Studio Code
+    - Visual Studio Code or Sublime Text 3
     - [Nau dotfiles][]
     - Currently stable Google Chrome
     - [NodeJS][] (for testing, previewing, compiling and optimizing processes)
@@ -46,6 +46,7 @@ FOLDER STRUCTURE
 
     /                           : git root
     ├── private                 : (directory for dev assets like editable PSDs, install templates, icons for icon fonts)
+    ├── public                  : directory for public static assets, e.g: images, favicon...
 <% if(src) { %>    └── <%= src %>                     : main source folder
 <% } %>
 

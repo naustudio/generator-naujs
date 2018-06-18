@@ -1,0 +1,29 @@
+---
+# Nau Standard
+# Please install: stylelint-config-standard
+extends: stylelint-config-standard
+rules:
+  at-rule-empty-line-before:
+  block-closing-brace-newline-after:
+    - always
+    - ignoreAtRules:
+        - if
+        - else
+  block-closing-brace-space-before:
+  color-named: never
+  color-no-hex: true
+  declaration-block-no-duplicate-properties: true
+  declaration-block-semicolon-space-after:
+  declaration-block-single-line-max-declarations: 3
+  declaration-colon-newline-after:
+  indentation: tab
+  max-empty-lines: 5
+  max-nesting-depth: 5
+  number-no-trailing-zeros:
+  selector-class-pattern: "^[a-z]+(?:-[a-z0-9]+)*(?:__[a-z0-9\\-]+){0,2}(?:--[a-z0-9\\-]+)?$"
+  selector-list-comma-newline-after:
+  shorthand-property-no-redundant-values:
+  string-quotes: single
+  selector-max-id: 0
+ignoreFiles:
+  - src/css/_normalize.css
