@@ -5,6 +5,17 @@
 > This is an opinionated [Yeoman](http://yeoman.io) generator made exclusively for [Nau Studio](https://github.com/naustudio)'s projects scaffolding and kickstart purposes.
 
 > Đây là một _bộ khởi tạo_ Yeoman được viết riêng cho Nâu Studio với mục đích khởi tạo nhanh các dự án theo quy trình của Nâu.
+>
+## WORK IN PROGRESS!!!
+
+This generator is being rewritten with modern workflow, using following tools:
+
+- Webpack
+- PostCSS
+- Babel
+- ESlint
+- Stylelint
+- Prettier
 
 ## Getting Started
 
@@ -38,16 +49,7 @@ yo naujs
 
 Sub-generators:
 
-```bash
-# generate gulpfile and install its dependencies
-yo naujs:gulp
-
-# add gulp iconfont task and install its dependencies
-yo naujs:gulp-iconfont
-
-# add dotfiles config for projects
-yo naujs:dotfiles
-```
+[BEING REWRITTEN]
 
 
 ### Getting To Know Yeoman
